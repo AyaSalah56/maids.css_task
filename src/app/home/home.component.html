@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+
+<section class="w-75 m-auto border my-5 py-5 bg-light" *ngIf="userSearch.length> 0 ,else name"  >
+    <h1 class="text-center my-3 main-color" *ngIf="userSearch.length>1"> all Users   </h1>
+    <h1 class="text-center my-3 main-color" *ngIf="userSearch.length== 1"> your user </h1>
+    <div class="row align-items-center justify-content-center">
+        <div [routerLink]="['/details' , user.id]" class="col-md-4 text-center my-3  " *ngFor="let user of userSearch | paginate: { id: 'foo',
+        itemsPerPage: pageSize,
+        currentPage: p,
+        totalItems: total }">
+           <div class="item ">
+            <img [src]="user.avatar" [alt]="user.first_name" [title]="user.first_name" class="w-50 img-fluid cursor-pointer">
+            <h3 class="h5 pt-3 small cursor-pointer main-color">{{user.id}}-{{user.first_name }} {{user.last_name}}</h3>
+           </div>
+        </div>
+    </div>
+
+
+ <div class="d-flex justify-content-center my-2">
+    <pagination-controls  id="foo"
+    (pageChange)="pageChanged($event)"
+    (pageBoundsCorrection)="pageChanged($event)"
+    [maxSize]="9"
+    [directionLinks]="true"
+    [autoHide]="true"
+    [responsive]="true"
+    previousLabel="Previous"
+    nextLabel="Next"
+    screenReaderPaginationLabel="Pagination"
+    screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You're on page">
+</pagination-controls>
+
+ </div>
+
+
+</section>
+
+
+<ng-template #name>
+    <section class="bg-light my-5 py-5 w-75 m-auto border">
+       <div class="d-flex justify-content-center align-items-center">
+        <h3 class="main-color"> not found ! </h3>
+       </div>
+    </section>
+</ng-template>
+
